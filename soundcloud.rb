@@ -22,8 +22,12 @@ post '/files' do
   unless params[:file]
     @error = "No file selected"
   else
-    File.new params[:file][:filename], 'w+'
+    #File.new params[:file][:filename], 'w+'
     "Uploaded #{params[:file][:filename]}"
+    @s = ""
+    params[:file].each { |x, y| @s += "key #{x}, value #{y.class}; " }
+    #"params[:file] : #{@s}"
+    #"size #{params[:file][:tempfile].size}"
   end
 end
 
