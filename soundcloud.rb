@@ -10,16 +10,7 @@ get '/' do
 	haml :main
 end
 
-post '/' do
-	unless params[:file]
-		@error = "No file selected"
-	else
-		File.new params[:file][:filename], 'w+'
-		"Uploaded #{params[:file][:filename]}"
-	end
-end
-
-post '/send' do
+post '/files' do
 	unless params[:file]
 		@error = "No file selected"
 	else

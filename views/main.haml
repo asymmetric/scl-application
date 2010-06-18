@@ -8,6 +8,6 @@
   %body
     %h1#title
       SoundCloud uploader
-    %form{ :method => :post, :enctype => "multipart/form-data", "accept-charset" => "utf-8" }
+    %form{ :action => :files, :method => :post, :enctype => "multipart/form-data", "accept-charset" => "utf-8" }
       %input#file{ :name => :file, :type => :file }
       %input#sendbutton{ :type => :submit }
