@@ -1,0 +1,13 @@
+!!! XML
+!!! Strict
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang' => 'en', :lang => 'en' }
+  %head
+    %title
+      SoundCloud uploader with HAML
+    %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
+  %body
+    %h1#title
+      SoundCloud uploader
+    %form{ :action => "", :enctype => "multipart/form-data", "accept-charset" => "utf-8" }
+      %input#file{ :name => :file, :type => :file }
+      %input#sendbutton{ :type => :submit }
