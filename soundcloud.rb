@@ -10,6 +10,14 @@ get '/' do
   haml :main
 end
 
+get '/files' do
+  "You asked for all the files"
+end
+
+get '/files/:id' do
+  "You asked for the file with id #{params[:id]}"
+end
+
 post '/files' do
   unless params[:file]
     @error = "No file selected"
