@@ -7,20 +7,20 @@ set :app_file, __FILE__
 set :root, File.dirname(__FILE__)
 
 get '/' do
-	haml :main
+  haml :main
 end
 
 post '/files' do
-	unless params[:file]
-		@error = "No file selected"
-	else
-		File.new params[:file][:filename], 'w+'
-		"Uploaded #{params[:file][:filename]}"
-	end
+  unless params[:file]
+    @error = "No file selected"
+  else
+    File.new params[:file][:filename], 'w+'
+    "Uploaded #{params[:file][:filename]}"
+  end
 end
 
 get '/send' do
-	erb :main
+  erb :main
 end
 
 get '/views/style.css' do
@@ -29,11 +29,11 @@ get '/views/style.css' do
 end
 
 helpers do
-	def my_send filename
-		"sending #{filename}"
-	end
+  def my_send filename
+    "sending #{filename}"
+  end
 end
 
 not_found do
-	'Sorry mate!'
+  'Sorry mate!'
 end
