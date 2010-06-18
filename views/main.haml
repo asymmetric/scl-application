@@ -6,8 +6,10 @@
       SoundCloud uploader in HAML
     %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
   %body
-    %h1#title
+    %h1
       SoundCloud uploader
-    %form{ :action => :files, :method => :post, :enctype => "multipart/form-data", "accept-charset" => "utf-8" }
+    %form#fileform{ :action => :files, :method => :post,
+        :enctype => "multipart/form-data", "accept-charset" => "utf-8" }
+      %input#title{ :type => :text, :name => :title, :value => "Enter the file title here" }
       %input#file{ :name => :file, :type => :file }
       %input#sendbutton{ :type => :submit }

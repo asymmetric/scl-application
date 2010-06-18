@@ -1,3 +1,25 @@
-body > h1#title {
-  color: blue;
+@title_color: #66CDAA;
+
+body {
+  background-color: gray;
+
+  h1:first-child {
+    color: @title_color;
+  }
+
+  #fileform {
+    /*
+    border: 2px black solid;
+    position: relative;
+
+    #title {
+      position: absolute;
+      top: 200px;
+    }
+      */
+
+    input {
+      display: block;
+    }
+  }
 }
