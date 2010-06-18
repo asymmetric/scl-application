@@ -4,9 +4,19 @@ require 'haml'
 require 'less'
 
 set :app_file, __FILE__
+set :root, File.dirname(__FILE__)
 
 get '/' do
 	haml :main
+end
+
+post '/' do
+	unless params[:file]
+		@error = "No file selected"
+	else
+		File.new params[:file][:filename], 'w+'
+		"Uploaded #{params[:file][:filename]}"
+	end
 end
 
 post '/send' do
