@@ -7,7 +7,7 @@
     %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
     %script{ :type => "text/javascript", :src => "scripts/javascript.js" }
   %body
-    %iframe#upload_iframe
+    %iframe#upload_iframe{ :name => "upload_frame" }
     %h1
       SoundCloud uploader
     %form#fileform{ :action => :files, :method => :post,
