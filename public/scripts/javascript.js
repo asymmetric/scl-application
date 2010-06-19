@@ -12,7 +12,7 @@ function add_events() {
   var submit = document.getElementById('sendbutton');
   submit.onclick = function() {
     var progressbar_div = document.getElementById('progressbar_div');
-    progressbar_div.style.display = 'inline';
+    progressbar_div.style.visibility = 'visible';
   }
 }
 
