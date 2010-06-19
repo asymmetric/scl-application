@@ -5,7 +5,9 @@
     %title
       SoundCloud uploader in HAML
     %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
+    %script{ :type => "text/javascript", :src => "scripts/javascript.js" }
   %body
+    %iframe#upload_iframe
     %h1
       SoundCloud uploader
     %form#fileform{ :action => :files, :method => :post,
