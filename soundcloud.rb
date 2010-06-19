@@ -22,8 +22,12 @@ post '/files' do
   unless params[:file]
     @error = "No file selected"
   else
-    File.new params[:file][:filename], 'w+'
+    #File.new params[:file][:filename], 'w+'
     "Uploaded #{params[:file][:filename]}"
+    @s = ""
+    params[:file].each { |x, y| @s += "key #{x}, value #{y.class}; " }
+    #"params[:file] : #{@s}"
+    #"size #{params[:file][:tempfile].size}"
   end
 end
 
@@ -31,10 +35,15 @@ get '/send' do
   erb :main
 end
 
-get '/views/style.css' do
+get '/views/:style' do
   content_type 'text/css', :charset => 'utf-8'
   less :style
 end
+
+
+#get '/scripts/:script' do
+#  content_type 'text/javascript', :charset => 'utf-8'
+#end
 
 helpers do
   def my_send filename
