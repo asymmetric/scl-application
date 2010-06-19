@@ -7,7 +7,7 @@
     %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
     %script{ :type => "text/javascript", :src => "scripts/javascript.js" }
   %body
-    %iframe#upload_iframe
+    %iframe.hidden#upload_iframe
     %h1
       SoundCloud uploader
     %form#fileform{ :action => :files, :method => :post,
@@ -15,3 +15,5 @@
       %input#title{ :type => :text, :name => :title, :value => "Enter the file title here" }
       %input#file{ :name => :file, :type => :file }
       %input#sendbutton{ :type => :submit }
+    .hidden#progressbar_div
+      %img#progressbar{ :src => '/images/progressbar.gif' }
