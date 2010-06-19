@@ -35,10 +35,15 @@ get '/send' do
   erb :main
 end
 
-get '/views/style.css' do
+get '/views/:style' do
   content_type 'text/css', :charset => 'utf-8'
   less :style
 end
+
+
+#get '/scripts/:script' do
+#  content_type 'text/javascript', :charset => 'utf-8'
+#end
 
 helpers do
   def my_send filename
