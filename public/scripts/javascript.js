@@ -16,13 +16,4 @@ function add_events() {
   }
 }
 
-function display_element() {
-  var submit = document.getElementById('sendbutton');
-  var iframe = document.getElementById('upload_iframe');
-  submit.style.display = "";
-  this.style.display = "";
-}
-
-
-
 window.onload = init;
