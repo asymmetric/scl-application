@@ -11,8 +11,8 @@ function change_target() {
 function add_events() {
   var submit = document.getElementById('sendbutton');
   submit.onclick = function() {
-    var progressbar = document.getElementById('progressbar');
-    progressbar.style.display = '';
+    var progressbar_div = document.getElementById('progressbar_div');
+    progressbar_div.style.display = 'inline';
   }
 }
 
