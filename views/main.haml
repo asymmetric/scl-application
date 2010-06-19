@@ -7,8 +7,7 @@
     %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
     %script{ :type => "text/javascript", :src => "scripts/javascript.js" }
   %body
-    %iframe.hidden#upload_iframe{ :name => "upload_frame" }
-    %h1
+    %h1#header
       SoundCloud uploader
     %form#fileform{ :action => :files, :method => :post,
         :enctype => "multipart/form-data", "accept-charset" => "utf-8" }
@@ -17,3 +16,4 @@
       %input#sendbutton{ :type => :submit }
     .hidden#progressbar_div
       %img#progressbar{ :src => '/images/progressbar.gif' }
+      %iframe.hidden#upload_iframe{ :name => "upload_frame" }
