@@ -3,7 +3,7 @@ var SERVER = window.location; // TODO ok?
 function init() {
   set_target();
   add_events();
-  periodical();
+  //periodical();
 }
 
 function set_target() {
@@ -18,6 +18,7 @@ function add_events() {
     var iframe = document.getElementById('upload_iframe');
     iframe.style.visibility = 'visible';
     progressbar_div.style.visibility = 'visible';
+    periodical();
   };
 
   var textfield = document.getElementById('title');
@@ -28,12 +29,14 @@ function add_events() {
 
 function periodical () {
   var iframe = document.getElementById('upload_iframe');
-  var timeout = setTimeout(function() {
+  var timeout = setInterval(function() {
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function() {
       if (ajax.readyState == 4) {
         if (ajax.status == 200) {
-          iframe.body.innerHTML = ajax.responseText;
+          iframe.innerHTML = ajax.responseText;
+          // alert(iframe.innerHTML);
+          //alert(ajax.responseText);
         } else {
           // TODO ko
         }
