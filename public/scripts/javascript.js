@@ -1,9 +1,11 @@
+var SERVER = window.location; // TODO ok?
+
 function init() {
-  change_target();
+  set_target();
   add_events();
 }
 
-function change_target() {
+function set_target() {
   var form = document.getElementById('fileform');
   form.setAttribute('target', 'upload_iframe');
 }
@@ -23,4 +25,14 @@ function add_events() {
   };
 }
 
+function periodical () {
+  var timeout = setTimeout(function() {
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function() {
+      // TODO
+    };
+    ajax.open('GET', SERVER + '/files');
+    ajax.send();
+  }, 1000);
+}
 window.onload = init;
