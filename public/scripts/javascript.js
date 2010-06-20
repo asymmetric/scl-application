@@ -13,10 +13,9 @@ function set_target() {
 
 function add_events() {
   var submit = document.getElementById('sendbutton');
+  // TODO maybe we should use addEventListener
   submit.onclick = function() {
     var progressbar_div = document.getElementById('progressbar_div');
-    var iframe = document.getElementById('upload_iframe');
-    iframe.style.visibility = 'visible';
     progressbar_div.style.visibility = 'visible';
     periodical();
   };
@@ -31,17 +30,18 @@ function periodical () {
   var timeout = setInterval(function() {
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function() {
-      var iframe = document.getElementById('upload_iframe');
+      //var iframe = document.getElementById('upload_iframe');
+      var status = document.getElementById('status');
       if (ajax.readyState == 4) {
         if (ajax.status == 200) {
-          iframe.innerHTML = ajax.responseText;
-          var asd;
+          //iframe.innerHTML = ajax.responseText;
+          status.value = ajax.responseText;
         } else {
           // TODO ko
         }
       }
     };
-    ajax.open('GET', SERVER + 'files', true);
+    ajax.open('GET', SERVER + 'status', true);
     ajax.send();
   }, 1000);
 }

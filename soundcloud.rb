@@ -30,6 +30,10 @@ post '/files' do
   end
 end
 
+get '/status' do
+  "37%"
+end
+
 get '/views/:style' do
   content_type 'text/css', :charset => 'utf-8'
   less :style
