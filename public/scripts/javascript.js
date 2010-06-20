@@ -31,7 +31,7 @@ function periodical () {
     ajax.onreadystatechange = function() {
       // TODO
     };
-    ajax.open('GET', SERVER + '/files');
+    ajax.open('GET', SERVER + '/files', true);
     ajax.send();
   }, 1000);
 }
