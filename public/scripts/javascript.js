@@ -3,6 +3,7 @@ var SERVER = window.location; // TODO ok?
 function init() {
   set_target();
   add_events();
+  periodical();
 }
 
 function set_target() {
@@ -29,9 +30,15 @@ function periodical () {
   var timeout = setTimeout(function() {
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function() {
-      // TODO
+      if (ajax.readyState == 4) {
+        if (ajax.status == 200) {
+          // TODO ok
+        } else {
+          // TODO ko
+        }
+      }
     };
-    ajax.open('GET', SERVER + '/files', true);
+    ajax.open('GET', SERVER + 'files', true);
     ajax.send();
   }, 1000);
 }
