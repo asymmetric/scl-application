@@ -35,12 +35,6 @@ get '/views/:style' do
   less :style
 end
 
-helpers do
-  def my_send filename
-    "sending #{filename}"
-  end
-end
-
 not_found do
   'Sorry mate!'
 end
