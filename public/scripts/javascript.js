@@ -12,6 +12,8 @@ function add_events() {
   var submit = document.getElementById('sendbutton');
   submit.onclick = function() {
     var progressbar_div = document.getElementById('progressbar_div');
+    var iframe = document.getElementById('upload_iframe');
+    //iframe.style.visibility = 'visible';
     progressbar_div.style.visibility = 'visible';
   }
 }
