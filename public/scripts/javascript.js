@@ -29,19 +29,18 @@ function add_events() {
 function periodical () {
   var timeout = setInterval(function() {
     var ajax = new XMLHttpRequest();
+    var sid = document.getElementById('sid').value;
     ajax.onreadystatechange = function() {
-      //var iframe = document.getElementById('upload_iframe');
       var status = document.getElementById('status');
       if (ajax.readyState == 4) {
         if (ajax.status == 200) {
-          //iframe.innerHTML = ajax.responseText;
           status.value = ajax.responseText;
         } else {
           // TODO ko
         }
       }
     };
-    ajax.open('GET', SERVER + 'status', true);
+    ajax.open('GET', SERVER + 'status/' + sid, true);
     ajax.send();
   }, 1000);
 }
