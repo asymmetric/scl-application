@@ -28,15 +28,14 @@ function add_events() {
 }
 
 function periodical () {
-  var iframe = document.getElementById('upload_iframe');
   var timeout = setInterval(function() {
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function() {
+      var iframe = document.getElementById('upload_iframe');
       if (ajax.readyState == 4) {
         if (ajax.status == 200) {
           iframe.innerHTML = ajax.responseText;
-          // alert(iframe.innerHTML);
-          //alert(ajax.responseText);
+          var asd;
         } else {
           // TODO ko
         }
