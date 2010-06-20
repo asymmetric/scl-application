@@ -15,7 +15,12 @@ function add_events() {
     var iframe = document.getElementById('upload_iframe');
     //iframe.style.visibility = 'visible';
     progressbar_div.style.visibility = 'visible';
-  }
+  };
+
+  var textfield = document.getElementById('title');
+  textfield.onfocus = function() {
+    this.value = "";
+  };
 }
 
 window.onload = init;
