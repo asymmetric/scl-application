@@ -16,7 +16,7 @@ function add_events() {
   submit.onclick = function() {
     var progressbar_div = document.getElementById('progressbar_div');
     var iframe = document.getElementById('upload_iframe');
-    //iframe.style.visibility = 'visible';
+    iframe.style.visibility = 'visible';
     progressbar_div.style.visibility = 'visible';
   };
 
@@ -27,12 +27,13 @@ function add_events() {
 }
 
 function periodical () {
+  var iframe = document.getElementById('upload_iframe');
   var timeout = setTimeout(function() {
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function() {
       if (ajax.readyState == 4) {
         if (ajax.status == 200) {
-          // TODO ok
+          iframe.body.innerHTML = ajax.responseText;
         } else {
           // TODO ko
         }
