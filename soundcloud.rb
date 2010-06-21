@@ -4,7 +4,8 @@ require 'haml'
 require 'less'
 
 set :app_file, __FILE__
-set :root, File.dirname(__FILE__)
+set :root, Proc.new { File.dirname app_file }
+set :filesdir, Proc.new { "#{root}/files" }
 
 get '/' do
   haml :main
