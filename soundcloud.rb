@@ -8,6 +8,10 @@ set :app_file, __FILE__
 set :root, File.dirname(__FILE__)
 set :filesdir, "#{File.dirname(__FILE__)}/files"
 
+configure do
+  @@assoc = {}
+end
+
 get '/' do
   @sid = sid
   haml :main
@@ -28,17 +32,20 @@ post '/files' do
     @tmp = params[:file][:tempfile]
     @sid = params[:sid]
     @filename = params[:file][:filename]
+    set_assoc @sid, @filename
     File.open("#{options.filesdir}/#{@filename}", 'w+') do |file|
       file << @tmp.read
     end
     #"Uploaded #{params[:file][:filename]}"
     #"params: #{params.inspect}"
-    "file size: #{env['CONTENT_LENGTH']}"
+    #"file size: #{env['CONTENT_LENGTH']}"
+    "tmp file name: #{@tmp.path}"
   end
 end
 
 get '/status/:sid' do
-  "37%"
+  #"37%"
+  "asd #{assoc :sid}"
 end
 
 get '/views/:style' do
@@ -49,6 +56,18 @@ end
 helpers do
   def sid
     Digest::MD5.hexdigest rand.to_s
+  end
+
+  def status sid
+    @dir = Dir::tmpdir
+  end
+
+  def set_assoc sid, tmp
+    @@assoc['sid'] = tmp
+  end
+
+  def assoc sid
+    @@assoc['sid']
   end
 end
 
