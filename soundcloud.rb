@@ -5,8 +5,8 @@ require 'less'
 require 'digest/md5'
 
 set :app_file, __FILE__
-set :root, File.dirname(__FILE__)
-set :filesdir, "#{File.dirname(__FILE__)}/files"
+set :root, Proc.new { File.dirname app_file }
+set :filesdir, Proc.new { "#{root}/files" }
 
 configure do
   @@assoc = {}
