@@ -24,11 +24,11 @@ post '/files' do
   unless params[:file]
     @error = "No file selected"
   else
+    @tmp = params[:file][:tempfile]
+    @sid = params[:sid]
     #File.new params[:file][:filename], 'w+'
-    "Uploaded #{params[:file][:filename]}"
-    @s = ""
-    params[:file].each { |x, y| @s += "key #{x}, value #{y.class} " }
-    "params[:file] : #{@s}"
+    #"Uploaded #{params[:file][:filename]}"
+    "params: #{params.inspect}"
   end
 end
 
@@ -43,7 +43,7 @@ end
 
 helpers do
   def sid
-    Digest::MD5.hexdigest rand().to_s
+    Digest::MD5.hexdigest rand.to_s
   end
 end
 
