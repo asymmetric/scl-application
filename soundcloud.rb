@@ -29,23 +29,20 @@ post '/files' do
   unless params[:file]
     @error = "No file selected"
   else
-    @tmp = params[:file][:tempfile]
+    tmp = params[:file][:tempfile]
     @sid = params[:sid]
-    @filename = params[:file][:filename]
-    set_assoc @sid, @filename
-    File.open("#{options.filesdir}/#{@filename}", 'w+') do |file|
-      file << @tmp.read
+    filename = params[:file][:filename]
+    set_assoc @sid, tmp
+    File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
+      file << tmp.read
     end
-    #"Uploaded #{params[:file][:filename]}"
-    #"params: #{params.inspect}"
     #"file size: #{env['CONTENT_LENGTH']}"
-    "tmp file name: #{@tmp.path}"
   end
 end
 
 get '/status/:sid' do
-  #"37%"
-  "asd #{assoc :sid}"
+  tmp = assoc params[:sid]
+  "size #{tmp.size}" unless tmp.nil?
 end
 
 get '/views/:style' do
@@ -63,11 +60,11 @@ helpers do
   end
 
   def set_assoc sid, tmp
-    @@assoc['sid'] = tmp
+    @@assoc[sid] = tmp
   end
 
   def assoc sid
-    @@assoc['sid']
+    @@assoc[sid]
   end
 end
 
