@@ -32,17 +32,22 @@ post '/files' do
     tmp = params[:file][:tempfile]
     @sid = params[:sid]
     filename = params[:file][:filename]
-    set_assoc @sid, tmp
+    set_assoc @sid, tmp, env['CONTENT_LENGTH']
+    #"assoc #{assoc @sid}"
     File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
       file << tmp.read
     end
-    #"file size: #{env['CONTENT_LENGTH']}"
   end
 end
 
 get '/status/:sid' do
-  tmp = assoc params[:sid]
-  "size #{tmp.size}" unless tmp.nil?
+  h = assoc params[:sid]
+  unless h.nil?
+    percentage = h[:file].size / h[:size].to_f
+    "#{percentage}%"
+  else
+    "0%"
+  end
 end
 
 get '/views/:style' do
@@ -59,8 +64,8 @@ helpers do
     @dir = Dir::tmpdir
   end
 
-  def set_assoc sid, tmp
-    @@assoc[sid] = tmp
+  def set_assoc sid, tmp, size
+    @@assoc[sid] = { :file => tmp, :size => size }
   end
 
   def assoc sid
