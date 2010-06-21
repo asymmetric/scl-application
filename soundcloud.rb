@@ -6,6 +6,7 @@ require 'digest/md5'
 
 set :app_file, __FILE__
 set :root, File.dirname(__FILE__)
+set :filesdir, "#{File.dirname(__FILE__)}/files"
 
 get '/' do
   @sid = sid
@@ -26,9 +27,13 @@ post '/files' do
   else
     @tmp = params[:file][:tempfile]
     @sid = params[:sid]
-    #File.new params[:file][:filename], 'w+'
+    @filename = params[:file][:filename]
+    File.open("#{options.filesdir}/#{@filename}", 'w+') do |file|
+      file << @tmp.read
+    end
     #"Uploaded #{params[:file][:filename]}"
-    "params: #{params.inspect}"
+    #"params: #{params.inspect}"
+    "file size: #{env['CONTENT_LENGTH']}"
   end
 end
 
