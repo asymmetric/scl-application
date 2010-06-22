@@ -36,9 +36,9 @@ function periodical () {
         if (ajax.status == 200) {
           status_el.value = ajax.responseText;
           console.log(status_el.value);
-        } else if (ajax.status == 304){
-          // TODO ko
-          console.log("unchanged");
+          if (parseFloat(status_el.value) > 99.9) {
+            window.clearInterval(timeout);
+          }
         }
       }
     };
