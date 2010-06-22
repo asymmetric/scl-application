@@ -34,10 +34,10 @@ function periodical () {
       var status = document.getElementById('status');
       if (ajax.readyState == 4) {
         if (ajax.status == 200) {
-          //iframe.innerHTML = ajax.responseText;
-          status.value = ajax.responseText;
-        } else {
-          // TODO ko
+          status_el.value = ajax.responseText;
+          if (parseFloat(status_el.value) > 99.9) {
+            window.clearInterval(timeout);
+          }
         }
       }
     };
