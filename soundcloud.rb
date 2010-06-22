@@ -4,12 +4,30 @@ require 'haml'
 require 'less'
 require 'digest/md5'
 
+
+class Uploads < Hash
+
+  def initialize
+    @assoc = {}
+  end
+
+  def [] sid
+    @assoc[sid]
+  end
+
+  def []= sid, tmpfile, size
+    @assoc[sid] = { :file => tmpfile, :size => size }
+  end
+
+end
+
+
 set :app_file, __FILE__
 set :root, Proc.new { File.dirname app_file }
 set :filesdir, Proc.new { "#{root}/files" }
 
-configure do
-  @@assoc = {}
+before do
+  @assoc_hash ||= Uploads.new
 end
 
 get '/' do
@@ -32,7 +50,8 @@ post '/files' do
     tmp = params[:file][:tempfile]
     @sid = params[:sid]
     filename = params[:file][:filename]
-    set_assoc @sid, tmp, env['CONTENT_LENGTH']
+    #set_assoc @sid, tmp, env['CONTENT_LENGTH']
+    @assoc_hash[@sid] = tmp, env['CONTENT_LENGTH']
     #@@assoc[@sid] = { :file => tmp, :size => env['CONTENT_LENGTH'] }
     File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
       file << tmp.read
@@ -43,12 +62,17 @@ post '/files' do
 end
 
 get '/status/:sid' do
-  h = assoc params[:sid]
-  unless h.nil?
-    percentage = (h[:file].size / h[:size].to_f) * 100
-    "#{percentage}%"
+  #h = assoc params[:sid]
+  unless @assoc_hash.nil?
+    h = @assoc_hash[:sid]
+    unless h.nil?
+      percentage = (h[:file].size / h[:size].to_f) * 100
+      "#{percentage}%"
+    else
+      "0%"
+    end
   else
-    "0%"
+    "fuck you"
   end
 end
 
