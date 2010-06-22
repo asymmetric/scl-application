@@ -37,6 +37,7 @@ post '/files' do
     File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
       file << tmp.read
     end
+    halt 200
   end
 end
 
