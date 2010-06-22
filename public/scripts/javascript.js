@@ -31,12 +31,14 @@ function periodical () {
     var ajax = new XMLHttpRequest();
     var sid = document.getElementById('sid').value;
     ajax.onreadystatechange = function() {
-      var status = document.getElementById('status');
+      var status_el = document.getElementById('status');
       if (ajax.readyState == 4) {
         if (ajax.status == 200) {
-          status.value = ajax.responseText;
-        } else {
+          status_el.value = ajax.responseText;
+          console.log(status_el.value);
+        } else if (ajax.status == 304){
           // TODO ko
+          console.log("unchanged");
         }
       }
     };
