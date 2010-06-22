@@ -33,10 +33,11 @@ post '/files' do
     @sid = params[:sid]
     filename = params[:file][:filename]
     set_assoc @sid, tmp, env['CONTENT_LENGTH']
-    #"assoc #{assoc @sid}"
+    #@@assoc[@sid] = { :file => tmp, :size => env['CONTENT_LENGTH'] }
     File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
       file << tmp.read
     end
+    #"assoc #{@@assoc.inspect}"
     halt 200
   end
 end
@@ -44,7 +45,7 @@ end
 get '/status/:sid' do
   h = assoc params[:sid]
   unless h.nil?
-    percentage = h[:file].size / h[:size].to_f
+    percentage = (h[:file].size / h[:size].to_f) * 100
     "#{percentage}%"
   else
     "0%"
@@ -59,10 +60,6 @@ end
 helpers do
   def sid
     Digest::MD5.hexdigest rand.to_s
-  end
-
-  def status sid
-    @dir = Dir::tmpdir
   end
 
   def set_assoc sid, tmp, size
