@@ -7,9 +7,11 @@ require 'digest/md5'
 set :app_file, __FILE__
 set :root, Proc.new { File.dirname app_file }
 set :filesdir, Proc.new { "#{root}/files" }
+set :reload, false
+#set :environment, :production
 
 configure do
-  @@assoc = {}
+  @@assoc ||= {}
 end
 
 get '/' do
@@ -44,6 +46,7 @@ end
 
 get '/status/:sid' do
   h = assoc params[:sid]
+  #h = @@assoc[params[:sid]]
   unless h.nil?
     percentage = (h[:file].size / h[:size].to_f) * 100
     "#{percentage}%"
