@@ -3,32 +3,31 @@ require 'sinatra'
 require 'haml'
 require 'less'
 require 'digest/md5'
+require 'dm-core'
+require 'dm-types'
+require 'dm-migrations'
+
+DataMapper::Logger.new($stdout, :debug)
+DataMapper.setup(:default, 'sqlite::memory:')
 
 
-class Uploads
+class Upload
+  include DataMapper::Resource
 
-  @assoc ||= {}
-
-  def self.all
-    @assoc
-  end
-
-  def self.[] sid
-    @assoc[sid]
-  end
-
-  def self.add sid, tmpfile, size
-    @assoc[sid] = { :file => tmpfile, :size => size }
-  end
-
+  property :sid,        String, :key => true
+  property :tmp,        FilePath
+  property :totalsize,  Integer
 end
+
+DataMapper.finalize
+DataMapper.auto_migrate!
 
 
 set :app_file, __FILE__
 set :root, Proc.new { File.dirname app_file }
 set :filesdir, Proc.new { "#{root}/files" }
-set :reload, false
-#set :environment, :test
+#set :reload, false
+set :environment, :production
 
 get '/' do
   @sid = sid
@@ -48,25 +47,34 @@ post '/files' do
     @error = "No file selected"
   else
     tmp = params[:file][:tempfile]
+    require 'ruby-debug/debugger'
     @sid = params[:sid]
     filename = params[:file][:filename]
-    Uploads.add @sid, tmp, env['CONTENT_LENGTH']
+    length = env['CONTENT_LENGTH']
+    upload = Upload.create(
+      :sid => @sid,
+      :tmp => tmp.path,
+      :totalsize => length
+    )
+    upload.save
     File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
       file << tmp.read
     end
     #"assoc #{@@assoc.inspect}"
     halt 200
+    #"sid #{@sid}"
   end
 end
 
 get '/status/:sid' do
-  halt if Uploads.all.nil?
-  h = Uploads[params[:sid]]
+  h = Upload.get params[:sid]
   unless h.nil?
-    percentage = (h[:file].size / h[:size].to_f) * 100
+    #percentage = (h[:file].size / h[:size].to_f) * 100
+    percentage = ( h.tmp.size / h.totalsize.to_f ) * 100
     "#{percentage}%"
   else
     "0%"
+    #"psid #{params[:sid]}"
   end
 end
 
