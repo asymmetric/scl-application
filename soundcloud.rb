@@ -7,8 +7,6 @@ require 'digest/md5'
 set :app_file, __FILE__
 set :root, Proc.new { File.dirname app_file }
 set :filesdir, Proc.new { "#{root}/files" }
-set :reload, false
-#set :environment, :production
 
 configure do
   @@assoc ||= {}
