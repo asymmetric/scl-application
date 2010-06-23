@@ -3,12 +3,30 @@ require 'sinatra'
 require 'haml'
 require 'less'
 require 'digest/md5'
+require 'dm-core'
+require 'dm-types'
+require 'dm-migrations'
+
+DataMapper::Logger.new($stdout, :debug)
+DataMapper.setup(:default, 'sqlite::memory:')
+
+
+class Upload
+  include DataMapper::Resource
+
+  property :sid,        String, :key => true
+  property :filename,   FilePath
+end
+
+DataMapper.finalize
+DataMapper.auto_migrate!
+
 
 set :app_file, __FILE__
-set :root, File.dirname(__FILE__)
+set :root, Proc.new { File.dirname app_file }
+set :filesdir, Proc.new { "#{root}/files" }
 
 get '/' do
-  @sid = sid
   haml :main
 end
 
@@ -24,27 +42,24 @@ post '/files' do
   unless params[:file]
     @error = "No file selected"
   else
-    #File.new params[:file][:filename], 'w+'
-    "Uploaded #{params[:file][:filename]}"
-    @s = ""
-    params[:file].each { |x, y| @s += "key #{x}, value #{y.class} " }
-    "params[:file] : #{@s}"
+    tmp = params[:file][:tempfile]
+    sid = params[:file][:sid]
+    filename = params[:file][:filename]
+    length = env['CONTENT_LENGTH']
+    upload = Upload.create(
+      :sid => sid,
+      :filename => filename
+    )
+    File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
+      file << tmp.read
+    end
+    halt 200
   end
-end
-
-get '/status/:sid' do
-  "37%"
 end
 
 get '/views/:style' do
   content_type 'text/css', :charset => 'utf-8'
   less :style
-end
-
-helpers do
-  def sid
-    Digest::MD5.hexdigest rand().to_s
-  end
 end
 
 not_found do

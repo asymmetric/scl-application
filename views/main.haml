@@ -7,6 +7,7 @@
     %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
     %script{ :type => "text/javascript", :src => "http://code.jquery.com/jquery-1.4.2.js" }
     %script{ :type => "text/javascript", :src => "scripts/javascript.js" }
+    %script{ :type => "text/javascript", :src => "http://code.jquery.com/jquery-1.4.2.js" }
   %body
     %h1#header
       SoundCloud uploader
@@ -16,8 +17,7 @@
         %input#title{ :type => :text, :name => :title, :value => "Enter the file title here" }
         %input#status{ :type => :text, :name => :status, :readonly => :readonly }
         %input#file{ :name => :file, :type => :file }
-        %input.hidden#sid{ :type => :text, :name => :sid, :value => @sid }
         %input#sendbutton{ :type => :submit }
     .hidden#progressbar_div
       %img#progressbar{ :src => '/images/progressbar.gif', :alt => :progressbar }
-    %iframe.hidden#upload_iframe{ :name => "upload_iframe" }
+    %iframe#upload_iframe{ :name => "upload_iframe" }
