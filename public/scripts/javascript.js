@@ -2,32 +2,17 @@ var SERVER = window.location; // TODO ok?
 var HASH_LENGTH = 32;
 var sid = 0;
 
-function init() {
-  set_target();
-  add_events();
-  //periodical();
-}
+$(document).ready(function() {
+    $('#fileform').attr('target', 'upload_iframe');
 
-function set_target() {
-  var form = document.getElementById('fileform');
-  form.setAttribute('target', 'upload_iframe');
-}
-
-function add_events() {
-  var submit = document.getElementById('sendbutton');
-  // TODO maybe we should use addEventListener
-  submit.onclick = function() {
-    var progressbar_div = document.getElementById('progressbar_div');
-    progressbar_div.style.visibility = 'visible';
-    generate_sid();
-    periodical();
-  };
-
-  var textfield = document.getElementById('title');
-  textfield.onfocus = function() {
-    this.value = "";
-  };
-}
+    $('#sendbutton').click(function() {
+        $('#progressbar_div').css('visibility', 'visible');
+        generate_sid();
+        periodical();
+      }
+    );
+  }
+);
 
 function generate_sid () {
   // TODO revise
@@ -35,11 +20,10 @@ function generate_sid () {
     sid += Math.floor(Math.random() * 16).toString(16);
   }
 
-  var form = document.getElementById('fileform');
-  var action = form.getAttribute('action');
-  action += "?X-Progress-ID=";
-  action += sid;
-  form.setAttribute('action', action);
+  $('#fileform').attr('action', function() {
+      return this.action + "?X-Progress-ID=" + sid;
+    }
+  );
 }
 
 function periodical () {
@@ -63,4 +47,4 @@ function periodical () {
     ajax.send();
   }, 1000);
 }
-window.onload = init;
+//window.onload = init;
