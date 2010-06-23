@@ -26,11 +26,8 @@ DataMapper.auto_migrate!
 set :app_file, __FILE__
 set :root, Proc.new { File.dirname app_file }
 set :filesdir, Proc.new { "#{root}/files" }
-#set :reload, false
-set :environment, :production
 
 get '/' do
-  @sid = sid
   haml :main
 end
 
@@ -47,8 +44,7 @@ post '/files' do
     @error = "No file selected"
   else
     tmp = params[:file][:tempfile]
-    require 'ruby-debug/debugger'
-    @sid = params[:sid]
+    @sid = sid
     filename = params[:file][:filename]
     length = env['CONTENT_LENGTH']
     upload = Upload.create(
@@ -56,7 +52,6 @@ post '/files' do
       :tmp => tmp.path,
       :totalsize => length
     )
-    upload.save
     File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
       file << tmp.read
     end
