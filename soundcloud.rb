@@ -13,7 +13,6 @@ configure do
 end
 
 get '/' do
-  @sid = sid
   haml :main
 end
 
@@ -30,7 +29,7 @@ post '/files' do
     @error = "No file selected"
   else
     tmp = params[:file][:tempfile]
-    @sid = params[:sid]
+    @sid = sid
     filename = params[:file][:filename]
     set_assoc @sid, tmp, env['CONTENT_LENGTH']
     #@@assoc[@sid] = { :file => tmp, :size => env['CONTENT_LENGTH'] }
