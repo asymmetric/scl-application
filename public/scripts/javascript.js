@@ -4,6 +4,9 @@ var POLLING = 1000;
 
 $(document).ready(function() {
     $('#fileform').attr('target', 'upload_iframe');
+    $('#title').one('keypress', function() {
+      $(this).val('').toggleClass('opaqued blackened');
+    });
 
     $('#sendbutton').click(function() {
         $('#progressbar_div').css('visibility', 'visible');
