@@ -15,7 +15,7 @@ class Upload
   include DataMapper::Resource
 
   property :sid,        String, :key => true
-  property :totalsize,  Integer
+  property :filename,   FilePath
 end
 
 DataMapper.finalize
@@ -48,26 +48,18 @@ post '/files' do
     length = env['CONTENT_LENGTH']
     upload = Upload.create(
       :sid => sid,
-      :totalsize => length
+      :filename => filename
     )
     File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
       file << tmp.read
     end
-    #"assoc #{@@assoc.inspect}"
     halt 200
-    #"sid #{@sid}"
   end
 end
 
 get '/views/:style' do
   content_type 'text/css', :charset => 'utf-8'
   less :style
-end
-
-helpers do
-  def sid
-    Digest::MD5.hexdigest rand.to_s
-  end
 end
 
 not_found do

@@ -35,9 +35,11 @@ function generate_sid () {
     sid += Math.floor(Math.random() * 16).toString(16);
   }
 
-  var action = document.getElementById('fileform').getAttribute('action');
+  var form = document.getElementById('fileform');
+  var action = form.getAttribute('action');
   action += "?X-Progress-ID=";
   action += sid;
+  form.setAttribute('action', action);
 }
 
 function periodical () {
@@ -49,9 +51,10 @@ function periodical () {
       var status_el = document.getElementById('status');
       if (ajax.readyState == 4) {
         if (ajax.status == 200) {
-          status_el.value = ajax.responseText;
-          console.log(status_el.value);
-          if (parseFloat(status_el.value) > 99.9) {
+          // TODO sanitize!
+          var upload = eval( "(" + ajax.responseText + ")" );
+          status_el.value = upload.state;
+          if (upload.state == 'done') {
             window.clearInterval(timeout);
           }
         }
