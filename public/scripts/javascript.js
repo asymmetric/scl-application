@@ -1,4 +1,5 @@
 var SERVER = window.location; // TODO ok?
+var HASH_LENGTH = 32;
 
 function init() {
   set_target();
@@ -17,6 +18,7 @@ function add_events() {
   submit.onclick = function() {
     var progressbar_div = document.getElementById('progressbar_div');
     progressbar_div.style.visibility = 'visible';
+    generate_sid();
     periodical();
   };
 
@@ -24,6 +26,16 @@ function add_events() {
   textfield.onfocus = function() {
     this.value = "";
   };
+}
+
+function generate_sid () {
+  var sid;
+  // TODO revise
+  for (var i = 0; i < HASH_LENGTH; i++) {
+    sid += Math.floor(Math.random() * 16).toString(16);
+  }
+
+  document.getElementById('sid').value = sid;
 }
 
 function periodical () {
