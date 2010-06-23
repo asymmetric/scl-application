@@ -1,6 +1,6 @@
-var SERVER = window.location; // TODO ok?
 var HASH_LENGTH = 32;
 var sid = 0;
+var POLLING = 1000;
 
 $(document).ready(function() {
     $('#fileform').attr('target', 'upload_iframe');
@@ -28,23 +28,18 @@ function generate_sid () {
 
 function periodical () {
   var timeout = setInterval(function() {
-    var ajax = new XMLHttpRequest();
-    ajax.open('GET', 'status/', true);
-    ajax.setRequestHeader("X-Progress-ID", sid);
-    ajax.onreadystatechange = function() {
-      var status_el = document.getElementById('status');
-      if (ajax.readyState == 4) {
-        if (ajax.status == 200) {
-          // TODO sanitize!
-          var upload = eval( "(" + ajax.responseText + ")" );
-          status_el.value = upload.state;
-          if (upload.state == 'done') {
-            window.clearInterval(timeout);
-          }
-        }
+    $.ajax({
+      type:       'GET',
+      url:        'status',
+      dataType:   'json',
+      beforeSend: function(ajax) {
+        ajax.setRequestHeader('X-Progress-ID', sid);
+      },
+      success:    function(response) {
+        $('#status').val(response.received);
+        if (response.state == 'done')
+          window.clearInterval(timeout);
       }
-    };
-    ajax.send();
-  }, 1000);
+    });
+  }, POLLING);
 }
-//window.onload = init;
