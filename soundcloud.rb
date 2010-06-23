@@ -15,7 +15,6 @@ class Upload
   include DataMapper::Resource
 
   property :sid,        String, :key => true
-  property :tmp,        FilePath
   property :totalsize,  Integer
 end
 
@@ -44,12 +43,11 @@ post '/files' do
     @error = "No file selected"
   else
     tmp = params[:file][:tempfile]
-    @sid = sid
+    sid = params[:file][:sid]
     filename = params[:file][:filename]
     length = env['CONTENT_LENGTH']
     upload = Upload.create(
-      :sid => @sid,
-      :tmp => tmp.path,
+      :sid => sid,
       :totalsize => length
     )
     File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
@@ -58,18 +56,6 @@ post '/files' do
     #"assoc #{@@assoc.inspect}"
     halt 200
     #"sid #{@sid}"
-  end
-end
-
-get '/status/:sid' do
-  h = Upload.get params[:sid]
-  unless h.nil?
-    #percentage = (h[:file].size / h[:size].to_f) * 100
-    percentage = ( h.tmp.size / h.totalsize.to_f ) * 100
-    "#{percentage}%"
-  else
-    "0%"
-    #"psid #{params[:sid]}"
   end
 end
 

@@ -1,5 +1,6 @@
 var SERVER = window.location; // TODO ok?
 var HASH_LENGTH = 32;
+var sid = 0;
 
 function init() {
   set_target();
@@ -29,19 +30,21 @@ function add_events() {
 }
 
 function generate_sid () {
-  var sid;
   // TODO revise
   for (var i = 0; i < HASH_LENGTH; i++) {
     sid += Math.floor(Math.random() * 16).toString(16);
   }
 
-  document.getElementById('sid').value = sid;
+  var action = document.getElementById('fileform').getAttribute('action');
+  action += "?X-Progress-ID=";
+  action += sid;
 }
 
 function periodical () {
   var timeout = setInterval(function() {
     var ajax = new XMLHttpRequest();
-    var sid = document.getElementById('sid').value;
+    ajax.open('GET', 'status/', true);
+    ajax.setRequestHeader("X-Progress-ID", sid);
     ajax.onreadystatechange = function() {
       var status_el = document.getElementById('status');
       if (ajax.readyState == 4) {
@@ -54,7 +57,6 @@ function periodical () {
         }
       }
     };
-    ajax.open('GET', SERVER + 'status/' + sid, true);
     ajax.send();
   }, 1000);
 }
