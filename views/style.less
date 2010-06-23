@@ -1,13 +1,26 @@
-@title_color: #66CDAA;
+@header_color:  #66CDAA;
+@title_color:   #888888;
 
 body {
   background-color: gray;
 
   h1#header {
-    color: @title_color;
+    color: @header_color;
   }
 
   #fileform {
+    .opaqued {
+      color: @title_color;
+    }
+
+    .blackened {
+      color: black;
+    }
+
+    #status {
+      width: 30%;
+    }
+
     /*
     border: 2px black solid;
     position: relative;
