@@ -16,6 +16,7 @@
       %p
         %input.opaqued#title{ :type => :text, :name => :title, :value => "Enter the file title here" }
         %input#status{ :type => :text, :name => :status, :readonly => :readonly }
+        %input.hidden#sid{ :type => :text, :name => :sid, :readonly => :readonly }
         %input#file{ :name => :file, :type => :file }
         %input#sendbutton{ :type => :submit }
     .hidden#progressbar_div

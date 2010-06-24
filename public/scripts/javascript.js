@@ -27,6 +27,7 @@ function generate_sid () {
       return this.action + "?X-Progress-ID=" + sid;
     }
   );
+  $('#sid').val(sid);
 }
 
 function periodical () {
@@ -40,8 +41,12 @@ function periodical () {
       },
       success:    function(response) {
         $('#status').val(response.received);
-        if (response.state == 'done')
+        if (response.state == 'done') {
           window.clearInterval(timeout);
+          $.get('files/' + sid, function(data) {
+            $('#status').val(data);
+          });
+        }
       }
     });
   }, POLLING);

@@ -15,15 +15,12 @@ class Upload
   include DataMapper::Resource
 
   property :sid,        String, :key => true
-  property :filename,   FilePath
+  property :path,       FilePath
 end
 
 DataMapper.finalize
 DataMapper.auto_migrate!
 
-
-set :app_file, __FILE__
-set :root, Proc.new { File.dirname app_file }
 set :filesdir, Proc.new { "#{root}/files" }
 
 get '/' do
@@ -34,23 +31,29 @@ get '/files' do
   "You asked for all the files"
 end
 
-get '/files/:id' do
-  "You asked for the file with id #{params[:id]}"
+get '/files/:sid' do
+  upload = Upload.get params[:sid]
+  unless upload.nil?
+    "#{upload.path}"
+  else
+    "Could not find upload with sid #{params[:sid]}"
+  end
 end
 
 post '/files' do
   unless params[:file]
     @error = "No file selected"
   else
+    sid = params[:sid]
     tmp = params[:file][:tempfile]
-    sid = params[:file][:sid]
     filename = params[:file][:filename]
-    length = env['CONTENT_LENGTH']
+    path = "#{options.filesdir}/#{filename}"
+
     upload = Upload.create(
       :sid => sid,
-      :filename => filename
+      :path => path
     )
-    File.open("#{options.filesdir}/#{filename}", 'w+') do |file|
+    File.open(path, 'w+') do |file|
       file << tmp.read
     end
     halt 200
