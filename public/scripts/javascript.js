@@ -40,12 +40,16 @@ function periodical () {
         ajax.setRequestHeader('X-Progress-ID', sid);
       },
       success:    function(response) {
-        $('#status').val(response.received);
         if (response.state == 'done') {
           window.clearInterval(timeout);
           $.get('files/' + sid, function(data) {
             $('#status').val(data);
           });
+        } else { // TODO handle other cases
+          var recv = response.received;
+          var total = response.size;
+          var percentage = (recv / total ) * 100
+          $('#status').val(percentage + '%');
         }
       }
     });
