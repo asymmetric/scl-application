@@ -11,7 +11,7 @@
   %body
     %h1#header
       SoundCloud uploader
-    %form#fileform{ :action => :files, :method => :post,
+    %form#fileform{ :action => :files, :method => :post, :target => :upload_iframe,
         :enctype => "multipart/form-data", "accept-charset" => "utf-8" }
       %p
         %input.opaqued#title{ :type => :text, :name => :title, :value => "Enter the file title here" }
