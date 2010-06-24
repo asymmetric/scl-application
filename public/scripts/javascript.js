@@ -7,28 +7,31 @@ $(document).ready(function() {
     $('#title').one('keypress', function() {
       $(this).val('').toggleClass('opaqued blackened');
     });
+    $('#progressbar').progressbar();
 
     $('#sendbutton').click(function() {
         generate_sid();
         periodical();
         $('#progressbar')
-          .toggleClass('hidden')
-          .progressbar();
+          .removeClass('hidden')
+          .progressbar('option', 'value', 0);
       }
     );
   }
 );
 
 function generate_sid () {
+  sid = 0;
   // TODO revise
   for (var i = 0; i < HASH_LENGTH; i++) {
     sid += Math.floor(Math.random() * 16).toString(16);
   }
 
-  $('#fileform').attr('action', function() {
-      return this.action + "?X-Progress-ID=" + sid;
-    }
-  );
+  $('#fileform').attr('action', '/files?X-Progress-ID=' + sid);
+  //$('#fileform').attr('action', function() {
+  //    return this.action + "?X-Progress-ID=" + sid;
+  //  }
+  //);
   $('#sid').val(sid);
 }
 
