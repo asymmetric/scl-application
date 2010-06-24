@@ -16,7 +16,7 @@ $(document).ready(function() {
           .slideDown()
           .progressbar('option', 'value', 0);
       }
-    );
+    ).button();
   }
 );
 
