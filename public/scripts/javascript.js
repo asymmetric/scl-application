@@ -3,7 +3,8 @@ var sid = 0;
 var POLLING = 1000;
 
 $(document).ready(function() {
-    $('#fileform').attr('target', 'upload_iframe');
+    ACTION = $('#fileform').attr('action');
+
     $('#title').one('keypress', function() {
       $(this).val('').toggleClass('opaqued blackened');
     });
@@ -27,12 +28,10 @@ function generate_sid () {
     sid += Math.floor(Math.random() * 16).toString(16);
   }
 
-  // TODO unmagic
-  $('#fileform').attr('action', '/files?X-Progress-ID=' + sid);
-  //$('#fileform').attr('action', function() {
-  //    return this.action + "?X-Progress-ID=" + sid;
-  //  }
-  //);
+  $('#fileform').attr('action', function() {
+      return ACTION + "?X-Progress-ID=" + sid;
+    }
+  );
   $('#sid').val(sid);
 }
 
