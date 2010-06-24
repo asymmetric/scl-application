@@ -9,9 +9,11 @@ $(document).ready(function() {
     });
 
     $('#sendbutton').click(function() {
-        $('#progressbar_div').css('visibility', 'visible');
         generate_sid();
         periodical();
+        $('#progressbar')
+          .toggleClass('hidden')
+          .progressbar();
       }
     );
   }
@@ -42,14 +44,15 @@ function periodical () {
       success:    function(response) {
         if (response.state == 'done') {
           window.clearInterval(timeout);
+          $('#progressbar').progressbar('option', 'value', 100);
           $.get('files/' + sid, function(data) {
             $('#status').val(data);
           });
         } else { // TODO handle other cases
           var recv = response.received;
           var total = response.size;
-          var percentage = (recv / total ) * 100
-          $('#status').val(percentage + '%');
+          var percentage = ( recv / total ) * 100;
+          $('#progressbar').progressbar('option', 'value', percentage);
         }
       }
     });

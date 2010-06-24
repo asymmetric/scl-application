@@ -5,7 +5,9 @@
     %title
       SoundCloud uploader in HAML
     %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
+    %link{ :href => "jqueryui/css/ui-lightness/jquery-ui-1.8.2.custom.css", :rel => :stylesheet, :type => "text/css" }
     %script{ :type => "text/javascript", :src => "http://code.jquery.com/jquery-1.4.2.js" }
+    %script{ :type => "text/javascript", :src => "jqueryui/js/jquery-ui-1.8.2.custom.min.js" }
     %script{ :type => "text/javascript", :src => "scripts/jquery.md5.js" }
     %script{ :type => "text/javascript", :src => "scripts/javascript.js" }
   %body
@@ -19,6 +21,5 @@
         %input.hidden#sid{ :type => :text, :name => :sid, :readonly => :readonly }
         %input#file{ :name => :file, :type => :file }
         %input#sendbutton{ :type => :submit }
-    .hidden#progressbar_div
-      %img#progressbar{ :src => '/images/progressbar.gif', :alt => :progressbar }
+    .hidden#progressbar
     %iframe.hidden#upload_iframe{ :name => "upload_iframe" }
