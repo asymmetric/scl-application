@@ -13,7 +13,7 @@ $(document).ready(function() {
         generate_sid();
         periodical();
         $('#progressbar')
-          .removeClass('hidden')
+          .slideDown()
           .progressbar('option', 'value', 0);
       }
     );
@@ -27,6 +27,7 @@ function generate_sid () {
     sid += Math.floor(Math.random() * 16).toString(16);
   }
 
+  // TODO unmagic
   $('#fileform').attr('action', '/files?X-Progress-ID=' + sid);
   //$('#fileform').attr('action', function() {
   //    return this.action + "?X-Progress-ID=" + sid;
