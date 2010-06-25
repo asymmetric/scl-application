@@ -1,4 +1,4 @@
-var HASH_LENGTH = 32;
+var HASH_LENGTH = 7;
 var sid = 0;
 var POLLING = 1000;
 var FILETYPES = [ 'mp3', 'wav', 'aiff', 'ogg', 'wma' ];
