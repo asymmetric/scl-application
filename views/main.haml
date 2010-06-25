@@ -3,7 +3,7 @@
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang' => 'en', :lang => 'en' }
   %head
     %title
-      SoundCloud uploader in HAML
+      SoundCloud Uploader
     %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
     %link{ :href => "jqueryui/css/ui-darkness/jquery-ui-1.8.2.custom.css", :rel => :stylesheet, :type => "text/css" }
     %script{ :type => "text/javascript", :src => "http://code.jquery.com/jquery-1.4.2.js" }
@@ -15,7 +15,7 @@
     %form#fileform{ :action => :files, :method => :post, :target => :upload_iframe,
         :enctype => "multipart/form-data", "accept-charset" => "utf-8" }
       %p
-        %input.opaqued#title{ :type => :text, :name => :title, :value => "Enter the file title here" }
+        %input.opaque#title{ :type => :text, :name => :title, :value => "Enter the file title here" }
         %input#status{ :type => :text, :name => :status, :readonly => :readonly }
         %input.hidden#sid{ :type => :text, :name => :sid, :readonly => :readonly }
         %input#file{ :name => :file, :type => :file }

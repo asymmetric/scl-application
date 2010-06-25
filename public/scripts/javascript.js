@@ -9,6 +9,9 @@ $(document).ready(function() {
       $(this).val('').toggleClass('opaqued blackened');
     });
     $('#progressbar').progressbar();
+    $('#file').change(function() {
+      $('#sendbutton').button({ disabled: false });
+    });
 
     $('#sendbutton').click(function() {
         generate_sid();
@@ -17,7 +20,7 @@ $(document).ready(function() {
           .slideDown()
           .progressbar('option', 'value', 0);
       }
-    ).button();
+    ).button({ disabled: true });
   }
 );
 
