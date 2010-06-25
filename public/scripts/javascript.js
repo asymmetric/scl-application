@@ -81,33 +81,43 @@ function periodical () {
       beforeSend: function(ajax) {
         ajax.setRequestHeader('X-Progress-ID', sid);
       },
+      // route success
       success:    function(response) {
-        if (response.state == 'done') {
-          window.clearInterval(timeout);
-          $('#progressbar').progressbar('option', 'value', 100);
-          $.ajax({
-            type:     'GET',
-            url:      'info/' + sid,
-            dataType: 'json',
-            async:    false,
-            success:  function(response) {
-              if (response.error) {
-                // TODO
-              } else {
-                $('#path').text(response.path);
-                var url = window.location + response.url;
-                $('#url').text(url);
+        switch (response.state) {
+          case 'done':
+            window.clearInterval(timeout);
+            $('#progressbar').progressbar('option', 'value', 100);
+            $.ajax({
+              type:     'GET',
+              url:      'info/' + sid,
+              dataType: 'json',
+              async:    false,
+              success:  function(response) {
+                if (response.error) {
+                  // TODO show error in dialog
+                  //
+                } else { // controller success
+                  $('#path').text(response.path);
+                  var url = window.location + response.url;
+                  $('#url').text(url);
+                }
               }
-            }
+            });
             $('#dialog').dialog('open');
-          });
-        } else { // TODO handle other cases
-          var recv = response.received;
-          var total = response.size;
-          var percentage = ( recv / total ) * 100;
-          $('#progressbar').progressbar('option', 'value', percentage);
+            break;
+          case 'uploading':
+            var recv = response.received;
+            var total = response.size;
+            var percentage = ( recv / total ) * 100;
+            $('#progressbar').progressbar('option', 'value', percentage);
+            break;
+          case 'error':
+            // TODO show error in dialog
         }
       }
-    });
+      error:      function(response){
+        // TODO show error in dialog
+      }
+});
   }, POLLING);
 }
