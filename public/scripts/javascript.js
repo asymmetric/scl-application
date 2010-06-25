@@ -33,6 +33,7 @@ $(document).ready(function() {
     $('#dialog').dialog({
       autoOpen: false,
       modal:    true,
+      width:    500,
       buttons:  {
         Ok: function() {
           $(this).dialog('close');
