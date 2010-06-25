@@ -26,7 +26,19 @@ $(document).ready(function() {
           .slideDown()
           .progressbar('option', 'value', 0);
       }
-    ).button({ disabled: true });
+    ).button({
+      disabled: true
+    });
+
+    $('#dialog').dialog({
+      autoOpen: false,
+      modal:    true,
+      buttons:  {
+        Ok: function() {
+          $(this).dialog('close');
+          }
+      }
+    });
   }
 );
 
@@ -72,9 +84,10 @@ function periodical () {
         if (response.state == 'done') {
           window.clearInterval(timeout);
           $('#progressbar').progressbar('option', 'value', 100);
-          $.get('info/' + sid, function(data) {
-            $('#status').val(data.path);
+          $.get('files/' + sid, function(data) {
+            $('#path').text(data);
           });
+          $('#dialog').dialog('open');
         } else { // TODO handle other cases
           var recv = response.received;
           var total = response.size;
