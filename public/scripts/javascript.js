@@ -84,10 +84,21 @@ function periodical () {
         if (response.state == 'done') {
           window.clearInterval(timeout);
           $('#progressbar').progressbar('option', 'value', 100);
-          $.get('files/' + sid, function(data) {
-            $('#path').text(data);
+          $.ajax({
+            type:     'GET',
+            url:      'info/' + sid,
+            dataType: 'json',
+            success:  function(response) {
+              if (response.error) {
+                // TODO
+              } else {
+                $('#path').text(response.path);
+                var url = window.location + response.url;
+                $('#url').text(url);
+              }
+              $('#dialog').dialog('open');
+            }
           });
-          $('#dialog').dialog('open');
         } else { // TODO handle other cases
           var recv = response.received;
           var total = response.size;
