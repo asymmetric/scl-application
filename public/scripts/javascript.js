@@ -89,6 +89,7 @@ function periodical () {
             type:     'GET',
             url:      'info/' + sid,
             dataType: 'json',
+            async:    false,
             success:  function(response) {
               if (response.error) {
                 // TODO
@@ -97,8 +98,8 @@ function periodical () {
                 var url = window.location + response.url;
                 $('#url').text(url);
               }
-              $('#dialog').dialog('open');
             }
+            $('#dialog').dialog('open');
           });
         } else { // TODO handle other cases
           var recv = response.received;
