@@ -7,4 +7,6 @@ require 'soundcloud'
 #set :root,        root_dir
 #set :app_file,    File.join(root_dir, 'soundcloud.rb')
 
+#set :environment, :test
+
 run Sinatra::Application

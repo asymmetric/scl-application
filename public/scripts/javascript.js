@@ -93,13 +93,11 @@ function periodical () {
               dataType: 'json',
               async:    false,
               success:  function(response) {
-                if (response.error) {
-                  // TODO show error in dialog
-                  //
-                } else { // controller success
+                if ( response.error === undefined) { //controller success
                   $('#path').text(response.path);
                   var url = window.location + response.url;
                   $('#url').text(url);
+                  $('#dialog_success').removeClass('hidden');
                 }
               }
             });
@@ -112,12 +110,20 @@ function periodical () {
             $('#progressbar').progressbar('option', 'value', percentage);
             break;
           case 'error':
-            // TODO show error in dialog
+            window.clearInterval(timeout);
+            $('#dialog').attr('title', "Upload failed!");
+            $('#error').text(response.error);
+            $('#dialog_error').removeClass('hidden');
+            break;
         }
-      }
+      },
       error:      function(response){
         // TODO show error in dialog
+        window.clearInterval(timeout);
+        $('#dialog').attr('title', "Communication problem!");
+        $('#error').text("Could not get a link to your uploaded file!");
+        $('#dialog_error').removeClass('hidden');
       }
-});
+    });
   }, POLLING);
 }
