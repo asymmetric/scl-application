@@ -1,6 +1,7 @@
 var HASH_LENGTH = 32;
 var sid = 0;
 var POLLING = 1000;
+var FILETYPES = [ 'mp3', 'wav', 'aiff', 'ogg', 'wma' ];
 
 $(document).ready(function() {
     ACTION = $('#fileform').attr('action');
@@ -9,8 +10,13 @@ $(document).ready(function() {
       $(this).val('').toggleClass('opaqued blackened');
     });
     $('#progressbar').progressbar();
+    $('#sendbutton').button({ disabled: true });
+
     $('#file').change(function() {
-      $('#sendbutton').button({ disabled: false });
+      if (checkFiletype($(this).val()))
+        $('#sendbutton').button( 'option', 'disabled', false );
+      else
+        $('#sendbutton').button( 'option', 'disabled', true );
     });
 
     $('#sendbutton').click(function() {
@@ -36,6 +42,21 @@ function generate_sid () {
     }
   );
   $('#sid').val(sid);
+}
+
+
+function checkFiletype (filename) {
+  var dots = filename.split('.');
+  var ext = dots.pop();
+
+  var notfound = true;
+  $.each(FILETYPES, function(index, value) {
+        notfound = (value != ext);
+        return notfound;
+      }
+  );
+
+  return !notfound;
 }
 
 function periodical () {
