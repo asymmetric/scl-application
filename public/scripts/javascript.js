@@ -72,8 +72,8 @@ function periodical () {
         if (response.state == 'done') {
           window.clearInterval(timeout);
           $('#progressbar').progressbar('option', 'value', 100);
-          $.get('files/' + sid, function(data) {
-            $('#status').val(data);
+          $.get('info/' + sid, function(data) {
+            $('#status').val(data.path);
           });
         } else { // TODO handle other cases
           var recv = response.received;

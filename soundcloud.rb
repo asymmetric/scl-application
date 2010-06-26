@@ -2,10 +2,10 @@ require 'rubygems'
 require 'sinatra'
 require 'haml'
 require 'less'
-require 'digest/md5'
 require 'dm-core'
 require 'dm-types'
 require 'dm-migrations'
+require 'json'
 
 DataMapper::Logger.new($stdout, :debug)
 DataMapper.setup(:default, 'sqlite::memory:')
@@ -14,8 +14,10 @@ DataMapper.setup(:default, 'sqlite::memory:')
 class Upload
   include DataMapper::Resource
 
-  property :sid,        String, :key => true
-  property :path,       FilePath
+  property :sid,        String,   :key => true
+  property :path,       FilePath, :required => true
+  property :url,        URI,      :required => true
+  property :error,      String
 end
 
 DataMapper.finalize
@@ -27,16 +29,27 @@ get '/' do
   haml :main
 end
 
+get '/files/:sid' do
+  file = Upload.get params[:sid]
+end
+
 get '/files' do
   "You asked for all the files"
 end
 
-get '/files/:sid' do
+get '/info/:sid' do
+  content_type :json
   upload = Upload.get params[:sid]
   unless upload.nil?
-    "#{upload.path}"
+    {
+      :path => upload.path,
+      :url => upload.url
+    }.to_json
   else
-    "Could not find upload with sid #{params[:sid]}"
+    err = "Could not find upload with sid #{params[:sid]}"
+    {
+      :error => err
+    }.to_json
   end
 end
 
@@ -48,10 +61,12 @@ post '/files' do
     tmp = params[:file][:tempfile]
     filename = params[:file][:filename]
     path = "#{options.filesdir}/#{filename}"
+    url = "files/#{sid}"
 
     upload = Upload.create(
-      :sid => sid,
-      :path => path
+      :sid  => sid,
+      :path => path,
+      :url  => url
     )
     File.open(path, 'w+') do |file|
       file << tmp.read
