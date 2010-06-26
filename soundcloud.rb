@@ -43,12 +43,14 @@ get '/info/:sid' do
   upload = Upload.get params[:sid]
   unless upload.nil?
     {
+      :sid  => params[:sid],
       :path => upload.path,
-      :url => upload.url
+      :url  => upload.url
     }.to_json
   else
     err = "Could not find upload with sid #{params[:sid]}"
     {
+      :sid   => params[:sid],
       :error => err
     }.to_json
   end
