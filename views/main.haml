@@ -4,8 +4,8 @@
   %head
     %title
       SoundCloud Uploader
-    %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
     %link{ :href => "jqueryui/css/ui-darkness/jquery-ui-1.8.2.custom.css", :rel => :stylesheet, :type => "text/css" }
+    %link{ :href => "views/style.css", :rel => :stylesheet, :type => "text/css" }
     %script{ :type => "text/javascript", :src => "http://code.jquery.com/jquery-1.4.2.js" }
     %script{ :type => "text/javascript", :src => "jqueryui/js/jquery-ui-1.8.2.custom.min.js" }
     %script{ :type => "text/javascript", :src => "scripts/javascript.js" }
@@ -26,10 +26,10 @@
         %p
           %span.ui-icon.ui-icon-circle-check
           File succesfully uploaded to
-          %span#path
+          %div#path
         %p
           Here's a link to it:
-          %span#url
+          %div#url
       .hidden#dialog_error
         %p
           %span.ui-icon.ui-icon-alert

@@ -109,11 +109,12 @@ function periodical () {
             var percentage = ( recv / total ) * 100;
             $('#progressbar').progressbar('option', 'value', percentage);
             break;
-          case 'error':
+          case 'error': // TODO make it a function?
             window.clearInterval(timeout);
-            $('#dialog').attr('title', "Upload failed!");
+            $('#dialog').dialog('option', 'title', "Upload failed!");
             $('#error').text(response.error);
             $('#dialog_error').removeClass('hidden');
+            $('#dialog').dialog('open');
             break;
         }
       },
@@ -123,6 +124,7 @@ function periodical () {
         $('#dialog').attr('title', "Communication problem!");
         $('#error').text("Could not get a link to your uploaded file!");
         $('#dialog_error').removeClass('hidden');
+        $('#dialog').dialog('open');
       }
     });
   }, POLLING);
