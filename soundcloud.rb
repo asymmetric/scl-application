@@ -31,6 +31,7 @@ end
 
 get '/files/:sid' do
   file = Upload.get params[:sid]
+  send_file file.path, :disposition => 'attachment'
 end
 
 get '/files' do
