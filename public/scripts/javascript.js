@@ -96,7 +96,7 @@ function periodical () {
                 if ( response.error === undefined) { //controller success
                   $('#path').text(response.path);
                   var url = window.location + response.url;
-                  $('#url').text(url);
+                  $('#url a').attr('href', url).text(url);
                   $('#dialog_success').removeClass('hidden');
                 }
               }
