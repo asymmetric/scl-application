@@ -5,6 +5,7 @@ Required Gems
 -------------
 
 * sinatra
+* passenger
 * haml
 * less
 * DataMapper
@@ -17,5 +18,27 @@ Required software
 -----------------
 
 * Apache
-* [Apache Upload Progress Module](http://github.com/drogus/apache-upload-progress-module)
+* [Apache Upload Progress Module][progress]
 * SQLite
+ 
+Deployment
+----------
+
+After installing the apache module, add these lines to your apache configuration
+
+    <Location /files >
+      TrackUploads On
+    </Location>
+
+    <Location /status >
+      ReportUploads On
+    </Location>
+
+Usage
+-----
+
+Just `GET /`, upload your file, and wait for it to complete!
+
+[progress]: http://github.com/drogus/apache-upload-progress-module
+
+
