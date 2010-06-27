@@ -1,2 +1,21 @@
 SoundCloud application
-=====================
+======================
+
+Required Gems
+-------------
+
+* sinatra
+* haml
+* less
+* DataMapper
+  * dm-core
+  * dm-types
+  * dm-migrations
+* json
+
+Required software
+-----------------
+
+* Apache
+* [Apache Upload Progress Module](http://github.com/drogus/apache-upload-progress-module)
+* SQLite
