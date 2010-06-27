@@ -69,7 +69,8 @@ post '/files' do
     sid = params[:sid]
     tmp = params[:file][:tempfile]
     filename = params[:file][:filename]
-    title = params[:title]
+    asd = params[:title]
+    title = (params[:title] != '') ? params[:title] : nil
     path = "#{options.filesdir}/#{filename}"
     url = "files/#{sid}"
 
