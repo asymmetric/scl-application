@@ -23,16 +23,16 @@
     %iframe.hidden#upload_iframe{ :name => "upload_iframe" }
     #dialog{ :title => 'Upload complete' }
       .hidden#dialog_success
-        %p
+        %div
           %span.ui-icon.ui-icon-circle-check
           File succesfully uploaded to
           %div#path
-        %p
+        %div
           Here's a link to it:
           %div#url
             %a{ :href => '#', :target => '_' }
       .hidden#dialog_error
-        %p
+        %div
           %span.ui-icon.ui-icon-alert
           Oops, something went wrong!
           %span#error
