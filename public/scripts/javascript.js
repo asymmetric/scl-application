@@ -2,12 +2,14 @@ var HASH_LENGTH = 7;
 var sid = 0;
 var POLLING = 1000;
 var FILETYPES = [ 'mp3', 'wav', 'flac', 'ape', 'mpc', 'aiff', 'ogg', 'wma' ];
+var changed = false;
 
 $(document).ready(function() {
     ACTION = $('#fileform').attr('action');
 
     $('#title').one('keypress', function() {
       $(this).val('').toggleClass('opaqued blackened');
+      changed = true;
     });
     $('#progressbar').progressbar();
     $('#sendbutton').button({ disabled: true });
@@ -25,6 +27,8 @@ $(document).ready(function() {
         $('#progressbar')
           .slideDown()
           .progressbar('option', 'value', 0);
+        if (!changed)
+          $('#title').val('');
       }
     ).button({
       disabled: true
