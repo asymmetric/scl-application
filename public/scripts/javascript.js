@@ -1,7 +1,7 @@
 var HASH_LENGTH = 7;
 var sid = 0;
 var POLLING = 1000;
-var FILETYPES = [ 'mp3', 'wav', 'aiff', 'ogg', 'wma' ];
+var FILETYPES = [ 'mp3', 'wav', 'flac', 'ape', 'mpc', 'aiff', 'ogg', 'wma' ];
 
 $(document).ready(function() {
     ACTION = $('#fileform').attr('action');
