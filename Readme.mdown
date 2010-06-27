@@ -20,7 +20,7 @@ Required software
 * Apache
 * [Apache Upload Progress Module][progress]
 * SQLite
- 
+
 Deployment
 ----------
 
@@ -37,8 +37,6 @@ After installing the apache module, add these lines to your apache configuration
 Usage
 -----
 
-Just `GET /`, upload your file, and wait for it to complete!
+Just `GET /`, upload a file in one of the popular formats (mp3, flac, ogg, etc.)  and wait for it to complete!
 
 [progress]: http://github.com/drogus/apache-upload-progress-module
-
-
