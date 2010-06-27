@@ -21,18 +21,17 @@
         %input#sendbutton{ :type => :submit, :value => 'Upload' }
     .hidden#progressbar
     %iframe.hidden#upload_iframe{ :name => "upload_iframe" }
-    #dialog{ :title => 'Upload complete' }
-      .hidden#dialog_success
-        %div
-          %span.ui-icon.ui-icon-circle-check
-          File succesfully uploaded to
-          %div#path
-        %div
-          Here's a link to it:
-          %div#url
-            %a{ :href => '#', :target => '_' }
-      .hidden#dialog_error
-        %div
-          %span.ui-icon.ui-icon-alert
-          Oops, something went wrong!
-          %span#error
+    .dialog#dialog_success{ :title => 'Upload complete' }
+      %div
+        %span.ui-icon.ui-icon-circle-check
+        File succesfully uploaded to
+        %div#path
+      %div
+        Here's a link to it:
+        %div#url
+          %a{ :href => '#', :target => '_' }
+    .dialog#dialog_error{ :title => 'Upload failed!' }
+      %div
+        %span.ui-icon.ui-icon-alert
+        Oops, something went wrong!
+        %span#error

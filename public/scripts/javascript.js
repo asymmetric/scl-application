@@ -30,7 +30,7 @@ $(document).ready(function() {
       disabled: true
     });
 
-    $('#dialog').dialog({
+    $('.dialog').dialog({
       autoOpen: false,
       modal:    true,
       width:    500,
@@ -97,11 +97,10 @@ function periodical () {
                   $('#path').text(response.path);
                   var url = window.location + response.url;
                   $('#url a').attr('href', url).text(url);
-                  $('#dialog_success').removeClass('hidden');
                 }
               }
             });
-            $('#dialog').dialog('open');
+            $('#dialog_success').dialog('open');
             break;
           case 'uploading':
             var recv = response.received;
@@ -111,20 +110,18 @@ function periodical () {
             break;
           case 'error': // TODO make it a function?
             window.clearInterval(timeout);
-            $('#dialog').dialog('option', 'title', "Upload failed!");
+            $('#dialog_error').dialog('option', 'title', "Upload failed!");
             $('#error').text(response.error);
-            $('#dialog_error').removeClass('hidden');
-            $('#dialog').dialog('open');
+            $('#dialog_error').dialog('open');
             break;
         }
       },
       error:      function(response){
         // TODO show error in dialog
         window.clearInterval(timeout);
-        $('#dialog').attr('title', "Communication problem!");
+        $('#dialog_error').attr('title', "Communication problem!");
         $('#error').text("Could not get a link to your uploaded file!");
-        $('#dialog_error').removeClass('hidden');
-        $('#dialog').dialog('open');
+        $('#dialog_error').dialog('open');
       }
     });
   }, POLLING);
