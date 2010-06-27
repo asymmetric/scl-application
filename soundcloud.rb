@@ -8,7 +8,12 @@ require 'dm-migrations'
 require 'json'
 
 DataMapper::Logger.new($stdout, :debug)
-DataMapper.setup(:default, 'sqlite::memory:')
+#DataMapper.setup(:default, 'sqlite::memory:')
+DataMapper.setup(:default, {
+  :adapter  => 'sqlite3',
+  :host     => 'localhost',
+  :database => 'db/uploads.db'
+})
 
 
 class Upload
@@ -17,7 +22,8 @@ class Upload
   property :sid,        String,   :key => true
   property :path,       FilePath, :required => true
   property :url,        URI,      :required => true
-  property :error,      String
+  property :title,      String,   :required => false
+  property :error,      String,   :required => false
 end
 
 DataMapper.finalize
@@ -63,13 +69,15 @@ post '/files' do
     sid = params[:sid]
     tmp = params[:file][:tempfile]
     filename = params[:file][:filename]
+    title = params[:title]
     path = "#{options.filesdir}/#{filename}"
     url = "files/#{sid}"
 
     upload = Upload.create(
-      :sid  => sid,
-      :path => path,
-      :url  => url
+      :sid   => sid,
+      :path  => path,
+      :url   => url,
+      :title => title
     )
     File.open(path, 'w+') do |file|
       file << tmp.read
