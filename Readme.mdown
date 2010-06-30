@@ -1,4 +1,4 @@
-SoundCloud application
+SoundCloud Uploader
 ======================
 
 Required Gems
