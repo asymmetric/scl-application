@@ -17,8 +17,8 @@ Required Gems
 Required software
 -----------------
 
-* Apache
-* [Apache Upload Progress Module][progress]
+* Apache/nginx
+* [Apache Upload Progress Module][progress]/[Nginx Upload Progress Module][nginx-progress]
 * SQLite
 
 Deployment
@@ -34,9 +34,12 @@ After installing the apache module, add these lines to your apache configuration
       ReportUploads On
     </Location>
 
+If using nginx, refer to the module's [documentation][nginx-progress] for setup information.
+
 Usage
 -----
 
 Just `GET /`, upload a file in one of the popular formats (mp3, flac, ogg, etc.)  and wait for it to complete!
 
 [progress]: http://github.com/drogus/apache-upload-progress-module
+[nginx-progress]: http://wiki.nginx.org/NginxHttpUploadProgressModule
