@@ -24,7 +24,7 @@ Required software
 Deployment
 ----------
 
-After installing the apache module, add these lines to your apache configuration
+After installing the apache module, add these lines to your apache configuration:
 
     <Location /files >
       TrackUploads On
